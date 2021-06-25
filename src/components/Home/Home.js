@@ -2,13 +2,22 @@ import React from 'react';
 import { Formik, Field, Form, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
 import env from 'react-dotenv';
+import axios from 'axios';
 
 const Home = props => {
   console.log(env.API_URL);
 
   function submitRecipe(values) {
     console.log(values);
-    
+    const requestBody = {
+      name: values.recipeName,
+    	ingredients: [{name: "noodles", amount: 1, unit: "cup"}], // TODO: figure this formatting out
+    	instructions: values.instructions,
+    	minutesToPrep: 10
+    }
+    axios.post(`${env.API_URL}/recipe`, requestBody).then(res => {
+      console.log(res);
+    });
   }
 
   return (
